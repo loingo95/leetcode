@@ -15,10 +15,10 @@ class Solution:
         
         # Init phase
         if l1.val >= l2.val:
-            head = ListNode(val=l2.val, next=l2.next)
+            head = l2
             l2 = l2.next
         else:
-            head = ListNode(val=l1.val, next=l1.next)
+            head = l1
             l1 = l1.next
         current_node = head
         while (l1 is not None) or (l2 is not None):
