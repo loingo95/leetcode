@@ -6,36 +6,20 @@
 #         self.right = right
 class Solution:
     def isValidBST(self, root: TreeNode) -> bool:
-        return self.recursiveChecking(root)
+        upper_limit = float("inf")
+        lower_limit = float("-inf")
+        return self.recursiveChecking(root, upper_limit, lower_limit)
     
-    def recursiveChecking(self, node: TreeNode) -> bool:
-        if node is None:
-            return True
-            
-        if not (self.check_left_subtree(node, node.left) and
-            self.check_right_subtree(node, node.right)):
-            return False
-        
-        return self.recursiveChecking(node.left) and \
-            self.recursiveChecking(node.right)
-    
-    
-    def check_left_subtree(self, root, node) -> bool:
+    def recursiveChecking(self, node: TreeNode, upper_limit, lower_limit) -> bool:
         if node is None:
             return True
         
-        if node.val >= root.val:
+        if node.val >= upper_limit:
             return False
         
-        return self.check_left_subtree(root, node.left) and \
-            self.check_left_subtree(root, node.right)
-        
-    def check_right_subtree(self, root, node) -> bool:
-        if node is None:
-            return True
-        
-        if node.val <= root.val:
+        if node.val <= lower_limit:
             return False
-        
-        return self.check_right_subtree(root, node.left) and \
-            self.check_right_subtree(root, node.right) 
+
+        return self.recursiveChecking(node.left, node.val, lower_limit) and \
+            self.recursiveChecking(node.right, upper_limit, node.val)
+    
