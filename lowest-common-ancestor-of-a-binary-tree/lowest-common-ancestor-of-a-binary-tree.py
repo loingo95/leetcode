@@ -47,27 +47,31 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        self.get_parent(root, None)
+        parent = {root: None}
+        self.get_parent(root, p, q, parent)
         
-        p_ancestors = self.get_all_parents(p)
-        q_ancestors = self.get_all_parents(q)
         
-        for p_ancestor in p_ancestors:
-            if p_ancestor in q_ancestors:
-                return p_ancestor
-        return None
+        ancestors = set()
+        while p:
+            ancestors.add(p)
+            p = parent[p]
+        
+        while q not in ancestors:
+            q = parent[q]
+        return q
 
     
-    def get_parent(self, node, parent):
+    def get_parent(self, node, p, q, parent):
         if node is None:
             return
-        node.parent = parent
-
-        self.get_parent(node.left, node)
-        self.get_parent(node.right, node)
         
-    def get_all_parents(self, node):
-        if node is None:
-            return []
-        return [node] + self.get_all_parents(node.parent)
+        if p in parent and q in parent:
+            return
+
+        parent[node.left] = node
+        parent[node.right] = node
+        
+        self.get_parent(node.left, p, q, parent)
+        self.get_parent(node.right, p, q, parent)
+        
             
