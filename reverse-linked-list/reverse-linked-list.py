@@ -8,18 +8,7 @@ class Solution:
         if not head or not head.next:
             return head
         
-        head_next = head.next
+        p = self.reverseList(head.next)
+        head.next.next = head
         head.next = None
-        new_head = self.recurse(head, head_next)
-        return new_head
-        
-    def recurse(self, node, node_next):
-        if node_next.next is None:
-            node_next.next = node
-            return node_next
-        
-        node_next_next = node_next.next
-        node_next.next = node
-        
-        return self.recurse(node_next, node_next_next)
-        
+        return p
