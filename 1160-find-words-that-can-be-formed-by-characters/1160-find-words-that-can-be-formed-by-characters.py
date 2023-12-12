@@ -3,6 +3,10 @@ import copy
 
 class Solution:
     def countCharacters(self, words: List[str], chars: str) -> int:
+        '''
+        time: len(words) * max(len(word[i])) ~ O(N*K)
+        space: len(chars)*len(words) ~ O(N*L)
+        '''
         # turn chars into hash map for faster query time, key=char, value=nrof chars
         chars_map = {}
         for char in chars:
