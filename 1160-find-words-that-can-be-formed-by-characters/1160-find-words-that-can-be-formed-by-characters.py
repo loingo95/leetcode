@@ -1,12 +1,9 @@
 class Solution:
     def countCharacters(self, words: List[str], chars: str) -> int:
         # turn chars into hash map for faster query time, key=char, value=nrof chars
-        chars_map = {}
+        chars_counts = defaultdict(int)
         for char in chars:
-            if char not in chars_map:
-                chars_map[char] = 1
-            else:
-                chars_map[char] += 1
+            chars_counts[char] += 1
 
         good_strings_len = 0
 
@@ -40,21 +37,18 @@ class Solution:
         # 2nd try with requency of letters hint
         for word in words:
             # build word chars map
-            word_chars_map = {}
+            word_chars_counts = defaultdict(int)
             for char in word:
-                if char not in word_chars_map:
-                    word_chars_map[char] = 1
-                else:
-                    word_chars_map[char] += 1
+                word_chars_counts[char] += 1
             
             # now do comparison
-            break_flag = False
-            for char in word_chars_map:
+            good = True
+            for char in word_chars_counts:
                 # if chars_map do not have char, then return 0
-                if word_chars_map[char] > chars_map.get(char, 0):
-                    break_flag = True
+                if word_chars_counts[char] > chars_counts.get(char, 0):
+                    good = False
                     break
-            if not break_flag:
+            if good:
                 good_strings_len += len(word) 
             
         return good_strings_len
