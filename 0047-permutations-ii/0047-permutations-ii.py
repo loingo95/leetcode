@@ -15,7 +15,7 @@ class Solution(object):
         nums_indexes = range(nums_len)
         
         # sort first for easily check duplicate
-        nums.sort()
+        # nums.sort()
         
         def backtracking(permutation):
             if len(permutation) == nums_len:
